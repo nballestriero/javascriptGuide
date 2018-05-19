@@ -1,0 +1,78 @@
+<html>
+	<header>
+		<style type="text/css">
+			td {border: 1px solid}
+		</style>
+	</header>
+	<body>
+
+	<form action="/action_page.php" id = "form">
+  		First name: <input type="text" name="fname" id = "input"><br>
+ 	 	Last name: <input type="text" name="lname"><br>
+  		<input type="submit" value="Submit">
+	</form> 
+
+	<div id="name"></div>
+	<div id="name2"></div>
+	<div id="output"></div>
+	<script>
+		window.onload = function () { 
+			/*alert("It's loaded!");
+			var itm = document.getElementById("input");
+			var itm2 = itm.cloneNode(true);
+			itm2.id = "input2";
+			document.getElementById("form").appendChild(itm2); 
+			console.log(itm);*/
+			var name  = prompt("insert a name");
+			var arrayNames = ["Larry","Jon","Paul"];
+			var arrayIterator = arrayNames[Symbol.iterator]()
+			arrayNames.push("APaul2");
+			arrayNames.sort();
+			var div2 = document.getElementById("name2");
+
+			for(var aName of arrayNames){
+				console.log(aName);
+			}
+			console.log("--------");
+
+			for(var aName in arrayNames){
+				console.log(arrayNames[aName])
+				console.log(arrayIterator.next().value)
+				switch(name){
+					case "Larry":
+						div2.innerHTML = name;
+					break
+					case "Paul":
+						div2.innerHTML = name ;
+					break
+					default:
+						div2.innerHTML = "name not found";
+				}
+
+				if(name == arrayNames[aName]){
+					var div = document.getElementById("name");
+					div.innerHTML = name;
+
+				}
+			}	
+			/*
+			 *	Table: loop
+			 *		
+			*/
+			var output = document.getElementById("output");
+	        var html ="<table>";
+	        for(var row = 0; row < 10; row++){
+	            html += "<tr>";
+	            for(var col = 0; col < 5 ;col++){
+	                html +="<td>Cell = "+((col+1)+(row*5))+"</td>";
+	            }
+	            html += "</tr>";
+	        }
+	        html += "</table>";
+	        output.innerHTML = html;
+		}			
+	</script>
+
+
+	</body>
+</html>

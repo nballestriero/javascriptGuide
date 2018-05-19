@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	    <title>Card Shuffler</title>
+	</head>
+	<body>
+		<input type="button" value="Deal" onclick="resizeWindow();"><br>
+		<div id="message"></div>
+	</body>
+	<script type="text/javascript">
+		function resizeWindow()
+		{
+			console.log(window);
+			var out = document.getElementById("message");
+			message.innerHTML = window.innerHeight + " X " + window.innerWidth;
+
+			window.resizeTo(600,1000);
+		}
+	</script>
+</html>

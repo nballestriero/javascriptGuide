@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>AJAXtest</title>
+	<style type="text/css">
+		img {
+			width: 200px;
+			height: 100px;
+			border: 1px solid #ddd; 
+		}
+	</style>
+</head>
+<body>
+	<div id="output"></div>
+	<div>
+		<input id="txt" type="text" name="name"><br>
+		<input id= "btn" type="button" name="btn" onclick="guessName()" value="guess">
+	</div>
+	<script>
+		var country;
+		myLoader();
+		function myLoader(){
+			var xHR = new XMLHttpRequest();
+			xHR.onload = rOutput;
+			xHR.open('GET','https://restcountries.eu/rest/v2/all',true);
+			xHR.send();
+		}
+
+		function rOutput(){
+			var myObj = JSON.parse(this.responseText);
+			var length = myObj.length;
+			myObj = myObj[Math.floor(Math.random()*length)];
+			console.log(myObj);
+			country = myObj;
+			displayGame();
+		}
+
+		function displayGame(){
+			output = document.getElementById("output");
+			var name = country.name;
+			name = shuffleWord(name);
+			output.innerHTML = '<div><img src="'+country.flag+'"></div></div id="cName">'+name+'</div>';
+		}
+
+		function shuffleWord(name){
+			name = name.split('');
+			scrumbledName = "";
+			while(name.length>0){
+				scrumbledName += name.splice(Math.floor(Math.random()*name.length),1);
+			}
+			return scrumbledName;
+		}
+
+		function guessName(){
+			var guess = document.getElementById("txt").value;
+			console.log(country.name);
+			console.log(guess);
+			console.log(guess===country.name);
+
+		}
+
+	</script>
+
+</body>
+</html>

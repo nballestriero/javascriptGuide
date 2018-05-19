@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Regular expression</title>
+	<style type="text/css">
+		.box{
+			width: 500px;
+			height: 500px;
+		}
+		.box2{
+			width: 500px;
+			height: 20px;
+			margin-bottom: 20px;
+		}
+
+
+		.highlights{
+		  font: 20px/28px 'Open Sans', sans-serif;
+		  width: 500px;
+		  height: 500px;
+		  margin-bottom: 20px;
+		  border: 1px solid #ddd;
+		  display: block;
+		  float: left;
+		}
+
+		textarea{
+		  font: 20px/28px 'Open Sans', sans-serif;
+		  width: 500px;
+		  height: 500px;
+		  margin-bottom: 20px;
+		  border: 1px solid #ddd;
+		  display: block;
+		  float: left;
+		}
+
+		#example{
+			display: block;
+		 	float: left;
+		 	width: 500px;
+		  	
+		}
+
+
+		mark{
+			background: "Yellow";
+		}
+
+		.error{
+			background-color : #f44242;
+		}
+
+	</style>
+</head>
+<body>
+	<input type="text" id="regex" class="box2" value="">
+	<input type="button" id="button" onclick="myFunc()" value="Evalua">
+	<br>
+
+	<textarea id="text" rows="30"></textarea>
+    <div id="output" class="highlights"></div>
+    <br>
+    <div id="example" >
+    </div>
+
+	<script type="text/javascript">
+
+		// activate the Listener for the input event in the textarea
+		var iText = document.getElementById("text");
+		iText.addEventListener('input', myFunc);
+		build();
+
+		var Iregex = document.getElementById("regex");
+		Iregex.addEventListener('input', CKpat);
+
+		function applyHighlights(text) {
+  			text = text
+    		.replace(/\n$/g, '\n\n')
+    		.replace(/[A-Z].*?\b/g, '<mark>$&</mark>');
+    		return text;
+    	}
+
+    	function build(){
+    		var example = "/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/";
+    		var temp_div = document.getElementById("example");
+
+    		var temp = '<table><tbody><tr>';
+			var close_temp = '</tr></tbody></table>';
+			var html_to_insert = '<td>email</td><td>' + example +'</td>';
+    		temp_div.innerHTML = temp + html_to_insert + close_temp;
+    		//console.log(table);
+    		
+    		//table.innerHTML("<tr> <th>email</th><th>" + "pp" + "</th></tr>");
+    	}
+
+    	function CKpat(){
+    		var iRegex = document.getElementById("regex");
+    		console.log(iRegex.value);
+    		var flag = checkPattern(iRegex.value);
+    		
+    		if(flag == null){
+    			iRegex.classList.add('error');
+    		}
+    		else{
+    			iRegex.classList.remove('error');
+    		}
+    		console.log(flag);
+    	}
+
+    	function handleInput() {
+  			var text = iText.value;
+  			var highlightedText = applyHighlights(text);
+  			console.log(highlightedText);
+  			if (highlightedText != undefined){
+  				document.getElementById("output").innerHTML = highlightedText;
+  			}
+		}
+
+		function checkPattern(exp){
+			var pattern = exp.match(/\/.{1,}\//);
+			// controllo che il pattern sia valido
+			if(pattern == null){
+				return null;
+			}
+			if(pattern.length != 1){
+				return null;
+			}
+			// controllo se ho dei flag
+			// creo un oggetto pattern usando il costruttore
+			flag = exp;
+			flag = flag.replace(pattern[0],"");
+			pattern = pattern[0].slice(1,pattern[0].length -1);
+			
+			// va in errore ad esempio se ho dei flag errati
+			try
+			{
+				pattern = new RegExp(pattern,flag);
+			}
+			catch
+			{
+				return null;
+			}
+			
+			if (pattern == null){
+				return null;
+			}
+			else{
+				return pattern;
+			}
+
+		}
+
+		var result;
+		function myFunc(){
+			var iText = document.getElementById("text");
+			var IExp = document.getElementById("regex").value;
+			var text = iText.value;
+			var html = "";
+			var exp = document.getElementById("regex").value;
+			// /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/
+			var pattern = checkPattern(exp);
+			if (pattern == null){
+				console.log("pattern Problem");
+			}
+			else{
+				//result = text.match(pattern);
+				
+				// nota questo è importantissimo perchè mi permette di avere più match quando testo i pattern per le mail
+				text= text.replace(/\n$/g, '\n\n');
+
+
+				html = text.replace(pattern,'<mark>$&</mark>');
+				document.getElementById("output").innerHTML = html;
+				//console.log(html);
+				//console.log(result);
+			}
+			//exp = new RegExp(exp,res[2]);
+			
+			//highlightText();
+
+		}
+
+		function highlightText(){
+			for(var x=0; x<result.length; x++){
+				console.log(x);
+				console.log(result[x]);
+			}
+		}
+
+	</script>
+</body>
+</html>
+
+<--
+EMAIL:
+/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/
+
+
+whith control on domain
+/([a-z0-9][-a-z0-9_\+\.]*[a-z0-9])@([a-z0-9][-a-z0-9\.]*[a-z0-9]\.(arpa|root|aero|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|ac|ad|ae|af|ag|ai|al|am|an|ao|aq|ar|as|at|au|aw|ax|az|ba|bb|bd|be|bf|bg|bh|bi|bj|bm|bn|bo|br|bs|bt|bv|bw|by|bz|ca|cc|cd|cf|cg|ch|ci|ck|cl|cm|cn|co|cr|cu|cv|cx|cy|cz|de|dj|dk|dm|do|dz|ec|ee|eg|er|es|et|eu|fi|fj|fk|fm|fo|fr|ga|gb|gd|ge|gf|gg|gh|gi|gl|gm|gn|gp|gq|gr|gs|gt|gu|gw|gy|hk|hm|hn|hr|ht|hu|id|ie|il|im|in|io|iq|ir|is|it|je|jm|jo|jp|ke|kg|kh|ki|km|kn|kr|kw|ky|kz|la|lb|lc|li|lk|lr|ls|lt|lu|lv|ly|ma|mc|md|mg|mh|mk|ml|mm|mn|mo|mp|mq|mr|ms|mt|mu|mv|mw|mx|my|mz|na|nc|ne|nf|ng|ni|nl|no|np|nr|nu|nz|om|pa|pe|pf|pg|ph|pk|pl|pm|pn|pr|ps|pt|pw|py|qa|re|ro|ru|rw|sa|sb|sc|sd|se|sg|sh|si|sj|sk|sl|sm|sn|so|sr|st|su|sv|sy|sz|tc|td|tf|tg|th|tj|tk|tl|tm|tn|to|tp|tr|tt|tv|tw|tz|ua|ug|uk|um|us|uy|uz|va|vc|ve|vg|vi|vn|vu|wf|ws|ye|yt|yu|za|zm|zw)|([0-9]{1,3}\.{3}[0-9]{1,3}))/g
+-->

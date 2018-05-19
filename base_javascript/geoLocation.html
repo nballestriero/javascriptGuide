@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>GeoTest</title>
+	<style type="text/css">
+		#map{
+			border: 1px solid #ddd;
+			height: 500px;
+			width: 1000px;
+		}
+		#location{
+			border: 1px solid #ddd;
+			height: 30px;
+			width: 500px;	
+		}
+	</style>
+</head>
+<body>
+	<div id="map"></div>
+	<div id="location"></div>
+
+<script type="text/javascript">
+	window.onload = init;
+
+	function init(){
+		navigator.geolocation.getCurrentPosition(dMap);
+	}
+
+	function dMap(dMap){
+		var location = document.getElementById("location");
+		console.dir(dMap);
+		location.innerHTML = "Latitude: " + dMap.coords.latitude + " Longitude: " + dMap.coords.longitude;
+	}
+</script>
+</body>
+</html>

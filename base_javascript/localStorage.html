@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>LocalStorage</title>
+	<style type="text/css">
+		.box{
+			border: 1px solid #ddd;
+		}
+	</style>
+</head>
+<body>
+	<div class="box"></div>
+	<input type="button" onclick="newStorage()" value="presss me">
+	<script type="text/javascript">
+		window.onload = init;
+		var number = 0;
+		var box = document.getElementsByClassName("box")[0];
+
+		function init(){
+			var message = "test: ";
+			var html = message + number;
+			box.innerHTML = html;
+			localStorage.setItem("mes", number );
+			console.log(localStorage.getItem("mes"));		
+		}
+		
+		function newStorage(){
+			var number = Number(localStorage.getItem("mes") ) +1 ;
+			localStorage.setItem("mes",number);
+			html = box.innerHTML;
+			console.log(html);
+			position = html.indexOf(' ');
+			console.log(position);
+			html = html.slice(0,position +1);
+			box.innerHTML = html + String(number);
+			
+			
+			
+			
+		}
+		
+	</script>
+
+</body>
+</html>

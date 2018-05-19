@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Dom Traversing</title>
+	<style type="text/css">
+		.mBox{
+			border: 1px solid;
+			height: 100px;
+			padding: 3px;
+		}
+		form{
+			border: 3px solid red;
+			padding: 3px;
+			height: 50px;
+		}
+		input{
+			padding: 3px;
+		}
+		.overlay{
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 150px;
+			margin-left: auto;
+			margin-right: auto;
+			height: 100px;
+			background-color: #ddd;
+			border: 1px solid black;
+			z-index: 1000;
+		}
+		td{
+			border: 1px solid #ddd;
+			padding: 10px;
+		}
+		#tbl{
+			position: absolute;
+			top: 300px;
+		}
+		.box{
+			background-color: #ddd;
+		}
+	</style>
+</head>
+<body onload="start()">
+	<form name = "myForm">
+		<input type="text" name="name">
+		<input type="button" name="button" value="Add" onclick = "addPerson()">
+	</form>
+
+	<div id="output" class="mBox">MESSAGE SPACE</div>
+	<div id="details" name="details" class="mBox">DETAILS</div>
+
+	<div id="tbl"></div>
+
+	<script>
+		var bgColor = ["red","blue","green"];
+		var people = ["Tom","Jonh","Artur"];
+
+		console.log(document.getElementsByClassName("mBox"));
+		console.log(document.getElementsByTagName("input"));
+		var e = document.getElementsByTagName("input");
+		console.log(e[1].type);
+		console.log(e[1].parentElement.nodeName);
+		//e[1].onclick= function(){console.log("click")};
+		//e[1].onmouseover = myFunc;
+		// select only the first
+		console.log(document.querySelector('div'));
+		// select all and return an array
+		console.log(document.querySelectorAll('div'));
+		
+
+		function myFunc(){
+			console.log(this);
+		}
+
+		function start(){
+			build();
+			setInterval(votable,5000);
+			setInterval(swapBg,2000);
+		}
+
+		function swapBg(){
+			var el = document.getElementsByClassName("mBox");
+			for(var x =0; x<el.length; x++){
+				c= bgColor[Math.floor(Math.random() * bgColor.length)];
+				if(c == "red"){
+					if(!el[x].classList.contains("overlay")){
+					// add a class
+					el[x].classList.add("overlay");
+					}
+
+				}
+				else{
+					if(el[x].classList.contains("overlay")){
+						el[x].classList.remove("overlay");
+					}
+				}
+				el[x].style.backgroundColor = c;
+			}
+		}
+
+		function build(){
+			var html = "<h1>Person Table</h1>";
+			html += "<table>"
+			for (var x =0; x<people.length;x++){
+				html += '<tr data-row="' + x + '" data-vote="0"><td  class="box">'
+						+ (x+1) + '</td><td>' + people[x] + '</td><td>0</td></tr>';
+			}
+			html += "</table>";
+			document.getElementById("tbl").innerHTML = html;
+
+			var el = document.getElementsByClassName("box");
+			for(var x =0; x<el.length;x++){
+				el[x].onclick = addVote;
+			}
+		}
+
+		function votable(){
+			var el = document.querySelectorAll("tr");
+			for(var x = 0; x<el.length; x ++){
+				var vote = el[x].getAttribute("data-vote");
+				vote = parseInt(vote);
+				el[x].setAttribute("data-vote",vote +1);
+				el[x].lastElementChild.innerText = el[x].getAttribute("data-vote");
+			}
+
+		}
+
+		function addVote(){
+			this.parentElement.lastElementChild.innerText = parseInt(this.parentElement.lastElementChild.innerText) + 1;
+			this.parentElement.setAttribute("data-vote", parseInt(this.parentElement.lastElementChild.innerText))
+		}
+
+		function addPerson(){
+			console.log("click");
+			var el = document.getElementsByTagName("tbody");
+			console.log(el);
+			el[0].innerHTML += "<tr><td>10</td></tr>";
+		}
+	</script>
+</body>
+</html>

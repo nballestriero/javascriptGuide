@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Event Listener</title>
+</head>
+<body>
+	<dir id="message"></dir>
+	<div id="wrapper"></div>
+	<img id="imgSwap">
+
+	<script type="text/javascript">
+		var i = document.getElementById('imgSwap');
+		var imgHolder = "http://via.placeholder.com/350x150/222/fff?text=Image1";
+		i.addEventListener('mouseover', mOver);
+		i.addEventListener('mouseout', mOut);
+
+		window.onload = function(){
+			i.src = imgHolder;
+		}
+
+		i.addEventListener('click', function(){
+										console.log(event);
+										message("clcked");
+									})
+
+
+
+		function mOver(){
+			imgHolder = "http://via.placeholder.com/350x150/222/fff?text=Over"
+			i.src = imgHolder;
+		}
+
+		function mOut(){
+			imgHolder = "http://via.placeholder.com/350x150/222/fff?text=Image1"
+			i.src = imgHolder;
+		}
+
+		function message(m){
+			document.getElementById("message").innerHTML = m;
+		}
+	</script>
+
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>File Reader</title>
+	<style type="text/css">
+		div{
+			border: 1px solid #ddd;
+			height: 100px;
+		}
+		#message{
+			height:400px;
+		}
+	</style>
+</head>
+<body>
+	<div id="output"></div>
+	<div id= "input"><input type="file" multiple onchange="uploadFile(this.files)"></div>
+	<div id="message"></div>
+
+	<script type="text/javascript">
+		var message = document.getElementById("message");
+		
+		window.onload = function() {
+			console.log("loaded");
+			if(window.FileReader){
+				html = "window.FileReader: ";
+				window.FileReader? html+="Avaiable":html+="Not avaiable";
+			}
+			message.innerHTML = html;
+			
+		}
+		function uploadFile(files)
+		{
+			console.dir(files)
+			for(var x =0; x<files.length;x++){
+				message.innerHTML +="<br>"+ files[x].name;
+				var fReader = new FileReader();
+				fReader.onload= function(e){
+					console.log(e.target.result);
+					console.log(e.target);
+				}
+				fReader.readAsText(files[x]);
+			}
+		}
+		
+	</script>
+</body>
+</html>

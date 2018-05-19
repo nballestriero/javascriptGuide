@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	    <title>Card Shuffler</title>
+	</head>
+	<body>
+		<h1>How many players? </h1>
+		<input type="number" id="players" min="1" max="5" value="3"><br>
+		<input type="button" value="Deal" onclick="StartDeal();"><br>
+		<div id="message"></div>
+		<div id="cardN">N. Used Card: </div>
+		
+		<script>
+			function StartDeal(){
+				var output = document.getElementById("message");
+				output.innerHTML = ""
+				var outputCard = document.getElementById("cardN");
+				outputCard.innerHTML = "N. Used Card: ";
+				var nPlayer = document.getElementById("players").value;
+				var deck = new Array();
+				const CARDS_NUMBER = 52;
+				outputCard.innerHTML += CARDS_NUMBER - (CARDS_NUMBER % nPlayer);
+				console.log(CARDS_NUMBER);
+				var fullCardArray = new Array();
+				for(i=0; i<CARDS_NUMBER; i++){
+					fullCardArray.push(i);
+				}
+				console.log(fullCardArray);
+				fullCardArray = shuffleArray(fullCardArray);
+				console.log(fullCardArray);
+				fullCardArray = removeExtraCard(nPlayer,fullCardArray);
+				console.log("array with no extra card");
+				console.log(fullCardArray);
+				deck = buildDeck();
+				/*for(var card of deck)
+				{
+					output.innerHTML += card.cardFace + "&" + card.suit + ";" + " ";
+				} */
+				printTable(deck,nPlayer,fullCardArray,output);
+			}
+			/**
+			 * Shuffles array in place. ES6 version
+			 * @param {Array} a items An array containing the items.
+			 */
+			function shuffleArray(a){
+			    for (let i = a.length - 1; i > 0; i--) {
+			        const j = Math.floor(Math.random() * (i + 1));
+			        [a[i], a[j]] = [a[j], a[i]];
+			    }
+			    return a;
+			}
+			/**
+			 * @param {Number} nPlayer player number.
+			 * @param {Array} a items An array containing the items.
+			 */
+			function removeExtraCard(nPlayer, a)
+			{
+				console.log(a.length % nPlayer);
+				return a.slice(a.length % nPlayer);
+			}
+			/**
+			 * @param {Number} nPlayer player number.
+			 * @param {Array} a items An array containing the items.
+			 */
+			function buildDeck(){
+				var suits = ["spades", "hearts", "clubs", "diams"];
+        		var cardFaces = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"];
+        		var deck = new Array();
+				for(var i of suits)
+				{
+					for(var k of cardFaces)
+					{
+						var card = {};
+						card.cardFace = k;
+						card.suit = i;
+						card.color = ["hearts","clubs"].indexOf(card.suit) > -1 ? "red":"black";
+						deck.push(card);
+
+					}
+				}
+				console.log("deck length");
+				console.log(deck.length);
+				return deck;
+			}
+			function printTable(deck,nPlayer,randVect,outputPlaceOlder)
+			{
+				for (var i = 0; i< nPlayer; i++)
+				{
+					outputPlaceOlder.innerHTML += "<span>"+"Player" + (i+1) + ":" + "</span><br>";
+					for (var k = ((randVect.length / nPlayer) * i); k < ((randVect.length/nPlayer)*(i+1))  ; k++ )
+					{
+						console.log(k);
+						console.log(randVect.length);
+						outputPlaceOlder.innerHTML += (k+1) + ": " + 
+													  "<span style=\"color:" + deck[randVect[k]].color + "\">"+
+													  deck[randVect[k]].cardFace +
+													  "&" + deck[randVect[k]].suit + ";"+
+													  " "+
+													  "</span>";
+					}
+					outputPlaceOlder.innerHTML += "<br>";
+				}
+
+			}
+
+		</script>
+
+	</body>
+</html>

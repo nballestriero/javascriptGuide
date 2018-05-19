@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Complete JavaScript Course</title>
+</head>
+<body>
+	<div id="wrapper"> Complete JavaScript Course </div>
+	<form>
+		<select onchange = "imgU()">
+			<option value ="">Select</option>
+			<option value ="150x50">Small</option>
+			<option value ="350x150">Medium</option>
+			<option value ="750x250">Big</option>
+		</select><br>
+			Add Text
+			<input type="text" onchange="imgU()">
+		<br>
+			Select Color for the Image
+			<input type="color" onchange="imgU()">
+		<br>
+			Select Color for the Text
+			<input type="color" onchange="imgU()">
+	</form>
+
+	<img src="http://via.placeholder.com/350x150/222/fff?text=Image1" id="myImage">
+
+	<script type="text/javascript">
+		var iColor = "222";
+		var iColorText = "ff5";
+		var iText = "Image1";
+		var iSize = "350x150";
+		function message(m){
+			document.getElementById("wrapper").innerHTML = m;
+		}
+		function imgU(){
+			console.dir(event.target.parentElement);
+			console.dir(event.target.value);
+			if(event.target.type == "select-one"){
+				iSize = event.target.value;
+			}
+			if(event.target.type == "text"){
+				iText = event.target.value;
+			}
+			if(event.target.type == "color"){
+
+				if (event.target == event.target.parentElement[2]){
+					iColor = event.target.value;
+					iColor = iColor.replace("#","");
+				}
+				else
+				{
+					iColorText = event.target.value;
+					iColorText = iColorText.replace("#","");
+				}
+			}
+		imageUrl =  "http://via.placeholder.com/" + iSize + "/" + iColor + "/" + iColorText + "?text=" + iText;
+		document.getElementById("myImage").src = imageUrl;
+		console.log(imageUrl);
+
+		}
+	</script>
+
+</body>
+</html>

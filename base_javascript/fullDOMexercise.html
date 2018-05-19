@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Full DOM exercise</title>
+	<style type="text/css">
+		td{
+			border: 1px solid #ddd;
+			padding: 10px;
+		}
+		td:first-child{
+			width: 300px;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<input type="text" id="addFriend">
+		<input type="button" id="addNew" value="Add Friend">
+	</div>
+
+	<div class="output"></div>
+
+	<script type="text/javascript">
+		var myArray = ["John", "Larry", "Thomas", "Paul"];
+		window.onload = build;
+
+		document.getElementById('addNew').addEventListener('click', addN, false);
+
+		function addN(){
+			var a = document.getElementById('addFriend').value;
+			myArray.push(a);
+			build();
+		}
+
+		function build(){
+			var html ="<h1>Click Table</h1><table>";
+			for(var x=0; x<myArray.length;x++){
+				html += '<tr id="id'+x+'" data-row="'+x+'"">';
+				html += '<td>' +
+						myArray[x] +
+						'</td>';
+				html += '<td><a href="#" data-action="delete">Del</a></td>';
+				html += '<td><a href="#" data-action="edit">Edit</a></td>';
+			}
+			html += "</table>";
+			document.querySelector('.output').innerHTML = html;
+
+			var dad = document.querySelectorAll('[data-action="delete"]');
+			for(var x=0; x<dad.length;x++){
+				dad[x].addEventListener('click',fDel);
+			}
+
+			var dae = document.querySelectorAll('[data-action="edit"]');
+			for(var x=0; x<dae.length;x++){
+				dae[x].addEventListener('click',fEdit);
+			}
+
+
+		}
+
+		function fDel(){
+			event.preventDefault();
+			var iValue = this.closest('[data-row]').getAttribute('data-row');
+			var r = myArray.splice(iValue,1);
+			build();
+		}
+
+		function fEdit(){
+			var row = this.closest('[data-row]');
+			var rid = row.getAttribute('data-row');
+			var td = row.firstElementChild;
+			var input = document.createElement('input');
+
+			event.preventDefault();
+			input.type="text";
+			input.value= td.innerText;
+			td.innerHTML="";
+			td.appendChild(input);
+			input.focus();
+			row.style.backgroundColor = "Yellow";
+			input.onblur = function(){
+				td.removeChild(input);
+				td.innerHTML = input.value;
+				myArray[rid] = input.value;
+				row.style.backgroundColor = "White";
+			}
+			//input.addEventListener('blur', fInputBlur(rid,input.value));
+		}
+
+		/*function fInputBlur(rid, value){
+			row = document.querySelector('[data-row="'+rid+'"]');
+			row.style.backgroundColor = "Green";
+			myArray[rid] = value;
+		}*/
+	</script>
+</body>
+</html>
