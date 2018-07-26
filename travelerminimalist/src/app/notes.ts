@@ -25,3 +25,7 @@
 // es. use page-list in App
 // in app.module import the page-list component e mettilo nell'array declarations
 // nel html template di app usa il tag <page-list> ovvero il nome dato in page-list.module component
+
+// use routing
+
+
