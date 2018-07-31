@@ -12,6 +12,7 @@ import { LoginPageComponent } from './login-page/login-page.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AfService } from './providers/af.service';
 import { AngularFireAuthModule } from 'angularfire2/auth'
+import {AngularFirestore, AngularFirestoreModule} from 'angularfire2/firestore'
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { AngularFireAuthModule } from 'angularfire2/auth'
     FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AngularFirestoreModule
   ],
   providers: [AfService],
   bootstrap: [AppComponent]
