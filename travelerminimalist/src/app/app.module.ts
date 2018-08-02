@@ -15,7 +15,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth'
 import {AngularFirestore, AngularFirestoreModule} from 'angularfire2/firestore';
 import { AppNavbarComponent } from './app-navbar/app-navbar.component';
 import { HomePageComponent } from './home-page/home-page.component';
-import { AdminPageComponent } from './admin-page/admin-page.component'
+
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
@@ -27,8 +27,7 @@ import { MaterialModule } from './material.module';
     PagesListComponent,
     LoginPageComponent,
     AppNavbarComponent,
-    HomePageComponent,
-    AdminPageComponent
+    HomePageComponent
     
   ],
   imports: [
