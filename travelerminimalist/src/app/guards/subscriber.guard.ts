@@ -14,7 +14,7 @@ export class SubscriberGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
         return this.af.user$.pipe(
                 take(1),
-                map(user => user && user.roles.admin ? true:false),
+                map(user => user && user.roles.subscriber ? true:false),
                 tap(isAdmin => {
                     if(!isAdmin){ 
                         console.error("Access denied - Subscriber only allowed");
