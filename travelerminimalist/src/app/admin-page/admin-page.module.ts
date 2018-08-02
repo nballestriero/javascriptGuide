@@ -1,15 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import {AdminRoutingModule} from "./admin-routing.module";
+import { MaterialModule } from './material.module';
+
+import { AdminRoutingModule } from "./admin-routing.module";
 import { AdminPageComponent } from "./admin-page.component";
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { AppNavbarComponent } from "./app-navbar/app-navbar.component";
 
 @NgModule({
   imports: [
     CommonModule,
-    AdminRoutingModule
+    MaterialModule,
+    AdminRoutingModule    
   ],
   exports: [],
-  declarations: [AdminPageComponent]
+  declarations: [AdminPageComponent, DashboardComponent, AppNavbarComponent]
 })
 export class AdminPageModule { }

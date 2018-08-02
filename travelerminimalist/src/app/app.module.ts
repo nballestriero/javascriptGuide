@@ -13,7 +13,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AfService } from './providers/af.service';
 import { AngularFireAuthModule } from 'angularfire2/auth'
 import {AngularFirestore, AngularFirestoreModule} from 'angularfire2/firestore';
-import { AppNavbarComponent } from './app-navbar/app-navbar.component';
 import { HomePageComponent } from './home-page/home-page.component';
 
 
@@ -26,7 +25,6 @@ import { MaterialModule } from './material.module';
     AppComponent,
     PagesListComponent,
     LoginPageComponent,
-    AppNavbarComponent,
     HomePageComponent
     
   ],
