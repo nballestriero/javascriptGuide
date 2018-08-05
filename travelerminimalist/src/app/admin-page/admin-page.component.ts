@@ -6,6 +6,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./admin-page.component.css']
 })
 export class AdminPageComponent implements OnInit {
+    links = [
+                          {
+                            name: 'Menus',
+                            link: "menus",
+                          },
+                          {
+                             name: 'Posts',
+                             link: "posts",
+                          }
+                        ];
+
 
   constructor() { }
 
