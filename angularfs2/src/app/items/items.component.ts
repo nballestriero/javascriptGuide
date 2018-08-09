@@ -9,13 +9,33 @@ import { Item } from '../models/items'
 })
 export class ItemsComponent implements OnInit {
   items: Item[];
+  editState: boolean = false;
+  itemToEdit: Item;
   constructor(private itemService: ItemService) { }
 
   ngOnInit() {
       this.itemService.getItem().subscribe(items=>{ 
-          console.log(items); 
+          //console.log(items); 
           this.items = items;
       });
+  }
+  
+  deleteItem(event, item){
+      this.clearState();
+      this.itemService.deleteItem(item);    
+  }
+  
+  editItem($event, item: Item){
+      this.editState = true;
+      this.itemToEdit = item;
+  }
+  clearState(){
+      this.editState = false;
+      this.itemToEdit = null;
+  }
+  updateItem(item: Item){
+      this.itemService.updateItem(item);
+      this.clearState();
   }
 
 }
